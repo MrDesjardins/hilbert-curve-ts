@@ -1,0 +1,26 @@
+{
+  "name": "hilbert-curve-ts",
+  "version": "1.0.0",
+  "description": "Hilbert Curve Library in TypeScript",
+  "main": "dist/lib/es5/index.js",
+  "module": "dist/lib/es6/index.js",
+  "types": "dist/lib/index.d.ts",
+  "scripts": {
+    "build": "tsc && tsc --build tsconfig.es5.json",
+    "test": "jest",
+    "test:watch": "jest --watchAll",
+    "test:coverage": "jest --coverage",
+    "test:coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls"
+  },
+  "keywords": [
+    "hilbert",
+    "curve"
+  ],
+  "author": "Patrick Desjardins",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^27.0.3",
+    "jest": "^27.4.3",
+    "ts-jest": "^27.1.0"
+  }
+}
