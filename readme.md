@@ -1,3 +1,5 @@
+[![codecov](https://codecov.io/gh/MrDesjardins/hilbert-curve-ts/branch/master/graph/badge.svg?token=0HGGX9Z9OW)](https://codecov.io/gh/MrDesjardins/hilbert-curve-ts)
+
 # Hilbert Curve Algorithm
 
 This library is a port of the [Hilbert Curve from Wikipedia](https://en.wikipedia.org/wiki/Hilbert_curve).

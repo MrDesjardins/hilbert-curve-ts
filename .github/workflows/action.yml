@@ -2,17 +2,16 @@ name: Build, Test and Coverage
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build:
 
-    runs-on: ubuntu-latest
-
     strategy:
       matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
         node-version: [10.x, 12.x, 14.x, 15.x]
 
     steps:
@@ -35,3 +34,4 @@ jobs:
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
+        if: matrix.os == 'ubuntu-latest' && matrix.node-version == '15.x'
