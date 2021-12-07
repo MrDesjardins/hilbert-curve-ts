@@ -1,3 +1,4 @@
+[![Build, Test and Coverage](https://github.com/MrDesjardins/hilbert-curve-ts/actions/workflows/action.yml/badge.svg)](https://github.com/MrDesjardins/hilbert-curve-ts/actions/workflows/action.yml)
 [![codecov](https://codecov.io/gh/MrDesjardins/hilbert-curve-ts/branch/master/graph/badge.svg?token=0HGGX9Z9OW)](https://codecov.io/gh/MrDesjardins/hilbert-curve-ts)
 
 # Hilbert Curve Algorithm
