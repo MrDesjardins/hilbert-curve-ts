@@ -1,1 +1,1 @@
-export { Hilbert } from "./hilbertAlgorithm";
+export { HilbertAlgorithm } from "./hilbertAlgorithm";

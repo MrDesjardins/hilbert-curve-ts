@@ -4,9 +4,11 @@
   "description": "Hilbert Curve Library in TypeScript",
   "main": "dist/lib/es5/index.js",
   "module": "dist/lib/es6/index.js",
-  "types": "dist/lib/index.d.ts",
+  "types": "dist/lib/es6/index.d.ts",
   "scripts": {
-    "build": "tsc && tsc --build tsconfig.es5.json",
+    "build": "npm build:es && npm build:commonjs",
+    "build:es": "tsc --project tsconfig.json",
+    "build:commonjs": "tsc --project tsconfig.commonjs.json",
     "test": "jest",
     "test:watch": "jest --watchAll",
     "test:coverage": "jest --coverage",
