@@ -3,7 +3,10 @@
 
 # Hilbert Curve Algorithm
 
-This library is a port of the [Hilbert Curve from Wikipedia](https://en.wikipedia.org/wiki/Hilbert_curve).
+This library is a port of the [Hilbert Curve algorithm from Wikipedia](https://en.wikipedia.org/wiki/Hilbert_curve). 
+
+
+> The library is not a drawing library, hence if you want to generate a visual for the value you will need to take the output of the algorithm and use another drawing library.
 
 # Goal
 
