@@ -1,5 +1,22 @@
-export type HilbertOrder = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
-export type ColumnsForOrder = 1 | 2 | 4 | 8 | 16 | 32 | 64 | 128 | 256 | 512;
+export type HilbertOrder = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16;
+export type ColumnsForOrder =
+  | 1
+  | 2
+  | 4
+  | 8
+  | 16
+  | 32
+  | 64
+  | 128
+  | 256
+  | 512
+  | 1024
+  | 2048
+  | 4096
+  | 8192
+  | 16384
+  | 32768
+  | 65636;
 export type PointValue = 0 | 1;
 export type PointWithPixelValue = { x: number; y: number };
 export type Point = { x: PointValue; y: PointValue };
@@ -63,9 +80,6 @@ export class HilbertAlgorithm {
     ry: PointValue,
     numberColumns: ColumnsForOrder
   ): void {
-    if (numberColumns < 0) {
-      throw new Error("Number of columns must be at a minimum 0");
-    }
     if (ry === 0) {
       if (rx === 1) {
         point.x = numberColumns - 1 - point.x;

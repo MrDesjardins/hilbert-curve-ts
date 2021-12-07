@@ -233,10 +233,16 @@ describe(HilbertAlgorithm.name, () => {
   });
   describe("rotate", () => {
     let ha = new HilbertAlgorithm(3);
-    let point: PointWithPixelValue = { x: 0, y: 0 };
-    let rx: PointValue = 0;
-    let ry: PointValue = 0;
-    let numberColumns: ColumnsForOrder = 1;
+    let point: PointWithPixelValue;
+    let rx: PointValue;
+    let ry: PointValue;
+    let numberColumns: ColumnsForOrder;
+    beforeEach(() => {
+      point = { x: 0, y: 0 };
+      rx = 1;
+      ry = 0;
+      numberColumns = 1;
+    });
     describe("numberColumns at 1", () => {
       beforeEach(() => {
         numberColumns = 1;
@@ -410,6 +416,35 @@ describe(HilbertAlgorithm.name, () => {
         });
       });
     });
+
+    describe("invalid values generated point.x", () => {
+      describe("point.x at 10 with a single column", () => {
+        beforeEach(() => {
+          point.x = 10;
+          point.y = 0;
+          numberColumns = 1;
+        });
+        it("throws an exception", () => {
+          expect(() => {
+            ha.rotate(point, rx, ry, numberColumns);
+          }).toThrow();
+        });
+      });
+    });
+    describe("invalid values generated point.y", () => {
+      describe("point.y at 10 with a single column", () => {
+        beforeEach(() => {
+          point.x = 0;
+          point.y = 10;
+          numberColumns = 1;
+        });
+        it("throws an exception", () => {
+          expect(() => {
+            ha.rotate(point, rx, ry, numberColumns);
+          }).toThrow();
+        });
+      });
+    });
   });
 
   describe("offsetPoint", () => {
@@ -435,6 +470,33 @@ describe(HilbertAlgorithm.name, () => {
         const result = ha.offsetPoint(point, projectionWidth);
         expect(result.x).toBe(8);
         expect(result.y).toBe(56);
+      });
+    });
+  });
+
+  describe("deoffsetPoint", () => {
+    const ha = new HilbertAlgorithm(3);
+    let projectionWidth: number = 0;
+    let point: PointWithPixelValue = { x: 8, y: 56 };
+    describe("projectionWidth negative", () => {
+      beforeEach(() => {
+        projectionWidth = -1;
+      });
+      it("throws an exception", () => {
+        expect(() => {
+          ha.deoffsetPoint(point, projectionWidth);
+        }).toThrow();
+      });
+    });
+
+    describe("projectionWidth postive", () => {
+      beforeEach(() => {
+        projectionWidth = 128;
+      });
+      it("projects the pixel", () => {
+        const result = ha.deoffsetPoint(point, projectionWidth);
+        expect(result.x).toBe(0);
+        expect(result.y).toBe(3);
       });
     });
   });
