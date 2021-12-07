@@ -18,6 +18,10 @@
     "hilbert",
     "curve"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MrDesjardins/hilbert-curve-ts.git"
+  },
   "author": "Patrick Desjardins",
   "license": "ISC",
   "devDependencies": {
