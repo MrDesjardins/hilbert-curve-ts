@@ -6,7 +6,7 @@
   "module": "dist/lib/es6/index.js",
   "types": "dist/lib/es6/index.d.ts",
   "scripts": {
-    "build": "npm build:es && npm build:commonjs",
+    "build": "npm run build:es && npm run build:commonjs",
     "build:es": "tsc --project tsconfig.json",
     "build:commonjs": "tsc --project tsconfig.commonjs.json",
     "test": "jest",
