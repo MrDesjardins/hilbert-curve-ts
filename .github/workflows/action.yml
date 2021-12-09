@@ -37,6 +37,15 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
         if: matrix.os == 'ubuntu-latest' && matrix.node-version == '16.x'
+
+      - name: Run benchmarks
+        run: npm run benchmarks | tee output.txt
+
+      - name: Store benchmark result
+        uses: benchmark-action/github-action-benchmark@v1
+        with:
+          tool: 'benchmarkjs'
+          output-file-path: output.txt
  
       - name: Publish to NPM
         run: npm publish
