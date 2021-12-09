@@ -1,7 +1,6 @@
 import {
   ColumnsForOrder,
   HilbertAlgorithm,
-  Point,
   PointValue,
   PointWithPixelValue,
 } from "./hilbertAlgorithm";
@@ -17,6 +16,12 @@ describe(HilbertAlgorithm.name, () => {
     it("Negative index", () => {
       expect(() => {
         ha.indexToPoint(-1);
+      }).toThrow();
+    });
+
+    it("is is not an integerindex", () => {
+      expect(() => {
+        ha.indexToPoint(1.1);
       }).toThrow();
     });
 
@@ -260,7 +265,7 @@ describe(HilbertAlgorithm.name, () => {
               point = { x: 0, y: 0 };
             });
             it("rotates point to (0,0)", () => {
-              ha.rotate(point, rx, ry, numberColumns);
+              ha.rotatePoint(point, rx, ry, numberColumns);
               expect(point.x).toBe(0);
               expect(point.y).toBe(0);
             });
@@ -275,7 +280,7 @@ describe(HilbertAlgorithm.name, () => {
               point = { x: 0, y: 0 };
             });
             it("rotates point to (0,0)", () => {
-              ha.rotate(point, rx, ry, numberColumns);
+              ha.rotatePoint(point, rx, ry, numberColumns);
               expect(point.x).toBe(0);
               expect(point.y).toBe(0);
             });
@@ -295,7 +300,7 @@ describe(HilbertAlgorithm.name, () => {
               point = { x: 0, y: 0 };
             });
             it("rotates to (0,0)", () => {
-              ha.rotate(point, rx, ry, numberColumns);
+              ha.rotatePoint(point, rx, ry, numberColumns);
               expect(point.x).toBe(0);
               expect(point.y).toBe(0);
             });
@@ -305,7 +310,7 @@ describe(HilbertAlgorithm.name, () => {
               point = { x: 0, y: 0 };
             });
             it("rotates to (0,0)", () => {
-              ha.rotate(point, rx, ry, numberColumns);
+              ha.rotatePoint(point, rx, ry, numberColumns);
               expect(point.x).toBe(0);
               expect(point.y).toBe(0);
             });
@@ -321,7 +326,7 @@ describe(HilbertAlgorithm.name, () => {
               point = { x: 0, y: 0 };
             });
             it("rotates point to (0,0)", () => {
-              ha.rotate(point, rx, ry, numberColumns);
+              ha.rotatePoint(point, rx, ry, numberColumns);
               expect(point.x).toBe(0);
               expect(point.y).toBe(0);
             });
@@ -347,7 +352,7 @@ describe(HilbertAlgorithm.name, () => {
               point = { x: 0, y: 0 };
             });
             it("rotates point to (0,0)", () => {
-              ha.rotate(point, rx, ry, numberColumns);
+              ha.rotatePoint(point, rx, ry, numberColumns);
               expect(point.x).toBe(0);
               expect(point.y).toBe(0);
             });
@@ -362,7 +367,7 @@ describe(HilbertAlgorithm.name, () => {
               point = { x: 0, y: 0 };
             });
             it("rotates point to (0,0)", () => {
-              ha.rotate(point, rx, ry, numberColumns);
+              ha.rotatePoint(point, rx, ry, numberColumns);
               expect(point.x).toBe(0);
               expect(point.y).toBe(0);
             });
@@ -382,7 +387,7 @@ describe(HilbertAlgorithm.name, () => {
               point = { x: 0, y: 0 };
             });
             it("rotates to (7,7)", () => {
-              ha.rotate(point, rx, ry, numberColumns);
+              ha.rotatePoint(point, rx, ry, numberColumns);
               expect(point.x).toBe(7);
               expect(point.y).toBe(7);
             });
@@ -392,7 +397,7 @@ describe(HilbertAlgorithm.name, () => {
               point = { x: 0, y: 0 };
             });
             it("rotates to (7,7)", () => {
-              ha.rotate(point, rx, ry, numberColumns);
+              ha.rotatePoint(point, rx, ry, numberColumns);
               expect(point.x).toBe(7);
               expect(point.y).toBe(7);
             });
@@ -408,7 +413,7 @@ describe(HilbertAlgorithm.name, () => {
               point = { x: 0, y: 0 };
             });
             it("rotates point to (0,0)", () => {
-              ha.rotate(point, rx, ry, numberColumns);
+              ha.rotatePoint(point, rx, ry, numberColumns);
               expect(point.x).toBe(0);
               expect(point.y).toBe(0);
             });
@@ -426,7 +431,7 @@ describe(HilbertAlgorithm.name, () => {
         });
         it("throws an exception", () => {
           expect(() => {
-            ha.rotate(point, rx, ry, numberColumns);
+            ha.rotatePoint(point, rx, ry, numberColumns);
           }).toThrow();
         });
       });
@@ -440,7 +445,7 @@ describe(HilbertAlgorithm.name, () => {
         });
         it("throws an exception", () => {
           expect(() => {
-            ha.rotate(point, rx, ry, numberColumns);
+            ha.rotatePoint(point, rx, ry, numberColumns);
           }).toThrow();
         });
       });
