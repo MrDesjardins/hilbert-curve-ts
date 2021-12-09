@@ -12,7 +12,7 @@ describe(HilbertAlgorithm.name, () => {
     });
   });
   describe("indexToPoint", () => {
-    let ha = new HilbertAlgorithm(2);
+    const ha = new HilbertAlgorithm(2);
     it("Negative index", () => {
       expect(() => {
         ha.indexToPoint(-1);
@@ -26,7 +26,7 @@ describe(HilbertAlgorithm.name, () => {
     });
 
     describe("first order", () => {
-      let ha = new HilbertAlgorithm(1);
+      const ha = new HilbertAlgorithm(1);
       it("has index 0 to point (0,0)", () => {
         const point = ha.indexToPoint(0);
         expect(point.x).toBe(0);
@@ -57,7 +57,7 @@ describe(HilbertAlgorithm.name, () => {
     });
 
     describe("second order", () => {
-      let ha = new HilbertAlgorithm(2);
+      const ha = new HilbertAlgorithm(2);
       it("has index 0 to point (0,0)", () => {
         const point = ha.indexToPoint(0);
         expect(point.x).toBe(0);
@@ -98,7 +98,7 @@ describe(HilbertAlgorithm.name, () => {
     });
 
     describe("third order", () => {
-      let ha = new HilbertAlgorithm(3);
+      const ha = new HilbertAlgorithm(3);
       it("has index 0 to point (0,0)", () => {
         const point = ha.indexToPoint(0);
         expect(point.x).toBe(0);
@@ -141,7 +141,7 @@ describe(HilbertAlgorithm.name, () => {
 
   describe("pointToIndex", () => {
     describe("first order", () => {
-      let ha = new HilbertAlgorithm(1);
+      const ha = new HilbertAlgorithm(1);
       it("has point (0,0) to index 0", () => {
         const index = ha.pointToIndex({ x: 0, y: 0 });
         expect(index).toBe(0);
@@ -168,7 +168,7 @@ describe(HilbertAlgorithm.name, () => {
     });
 
     describe("second order", () => {
-      let ha = new HilbertAlgorithm(2);
+      const ha = new HilbertAlgorithm(2);
       it("has point (0,0) to index 0", () => {
         const index = ha.pointToIndex({ x: 0, y: 0 });
         expect(index).toBe(0);
@@ -202,7 +202,7 @@ describe(HilbertAlgorithm.name, () => {
       });
     });
     describe("third order", () => {
-      let ha = new HilbertAlgorithm(3);
+      const ha = new HilbertAlgorithm(3);
       it("point (0,0) to index 0", () => {
         const index = ha.pointToIndex({ x: 0, y: 0 });
         expect(index).toBe(0);
@@ -237,7 +237,7 @@ describe(HilbertAlgorithm.name, () => {
     });
   });
   describe("rotate", () => {
-    let ha = new HilbertAlgorithm(3);
+    const ha = new HilbertAlgorithm(3);
     let point: PointWithPixelValue;
     let rx: PointValue;
     let ry: PointValue;
@@ -455,7 +455,7 @@ describe(HilbertAlgorithm.name, () => {
   describe("offsetPoint", () => {
     const ha = new HilbertAlgorithm(3);
     let projectionWidth: number = 0;
-    let point: PointWithPixelValue = { x: 0, y: 3 };
+    const point: PointWithPixelValue = { x: 0, y: 3 };
     describe("projectionWidth negative", () => {
       beforeEach(() => {
         projectionWidth = -1;
@@ -482,7 +482,7 @@ describe(HilbertAlgorithm.name, () => {
   describe("deoffsetPoint", () => {
     const ha = new HilbertAlgorithm(3);
     let projectionWidth: number = 0;
-    let point: PointWithPixelValue = { x: 8, y: 56 };
+    const point: PointWithPixelValue = { x: 8, y: 56 };
     describe("projectionWidth negative", () => {
       beforeEach(() => {
         projectionWidth = -1;

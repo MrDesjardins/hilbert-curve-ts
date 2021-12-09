@@ -96,7 +96,13 @@ export class HilbertAlgorithm {
     return point;
   }
 
-  public pointToIndex(point: CoordinateValue) {
+  /**
+   * Takes a point and return an index. Hilbert algorithm is deterministic, hence
+   * you can take a point from the `indexToPoint` and it returns the exact same index
+   * 
+   * Example: pointToIndex(indexToPoint(123)) returns 123s
+   */
+  public pointToIndex(point: CoordinateValue): number {
     const n: ColumnsForOrder = (2 ** this.order) as ColumnsForOrder;
 
     if (point.x >= n || point.y >= n) {
