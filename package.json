@@ -1,6 +1,6 @@
 {
   "name": "hilbert-curve-ts",
-  "version": "0.0.7",
+  "version": "0.0.6",
   "description": "Hilbert Curve Library in TypeScript",
   "main": "dist/lib/es5/index.js",
   "module": "dist/lib/es6/index.js",
@@ -24,6 +24,7 @@
     "benchmark": "^2.1.4",
     "jest": "^27.4.3",
     "ts-jest": "^27.1.0",
+    "ts-node": "^10.4.0",
     "typescript": "^4.5.2"
   },
   "keywords": [
