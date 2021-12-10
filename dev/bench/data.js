@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639096271844,
+  "lastUpdate": 1639096924207,
   "repoUrl": "https://github.com/MrDesjardins/hilbert-curve-ts",
   "entries": {
     "Benchmark": [
@@ -186,6 +186,93 @@ window.BENCHMARK_DATA = {
             "range": "±1.19%",
             "unit": "ops/sec",
             "extra": "85 samples"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "pdesjardins@netflix.com",
+            "name": "Patrick Desjardins",
+            "username": "MrDesjardins"
+          },
+          "committer": {
+            "email": "pdesjardins@netflix.com",
+            "name": "Patrick Desjardins",
+            "username": "MrDesjardins"
+          },
+          "distinct": true,
+          "id": "bfff06e1eadeef7cce0a1ec53bec83dcd405ae9d",
+          "message": "More benchmarks",
+          "timestamp": "2021-12-09T16:39:40-08:00",
+          "tree_id": "b202ad9b72d4dd7632993246d16d4661acd63666",
+          "url": "https://github.com/MrDesjardins/hilbert-curve-ts/commit/bfff06e1eadeef7cce0a1ec53bec83dcd405ae9d"
+        },
+        "date": 1639096923417,
+        "tool": "benchmarkjs",
+        "benches": [
+          {
+            "name": "Hilbert Order 2",
+            "value": 5764415,
+            "range": "±0.30%",
+            "unit": "ops/sec",
+            "extra": "93 samples"
+          },
+          {
+            "name": "Hilbert Order 3",
+            "value": 5341773,
+            "range": "±0.48%",
+            "unit": "ops/sec",
+            "extra": "93 samples"
+          },
+          {
+            "name": "Hilbert Order 4",
+            "value": 5000377,
+            "range": "±0.30%",
+            "unit": "ops/sec",
+            "extra": "94 samples"
+          },
+          {
+            "name": "Hilbert Order 5",
+            "value": 4733931,
+            "range": "±0.18%",
+            "unit": "ops/sec",
+            "extra": "97 samples"
+          },
+          {
+            "name": "Hilbert Order 6",
+            "value": 4460918,
+            "range": "±0.21%",
+            "unit": "ops/sec",
+            "extra": "96 samples"
+          },
+          {
+            "name": "Hilbert Order 7",
+            "value": 4247692,
+            "range": "±0.24%",
+            "unit": "ops/sec",
+            "extra": "96 samples"
+          },
+          {
+            "name": "Hilbert Order 8",
+            "value": 4034775,
+            "range": "±0.27%",
+            "unit": "ops/sec",
+            "extra": "95 samples"
+          },
+          {
+            "name": "Hilbert Order 9",
+            "value": 3760060,
+            "range": "±0.51%",
+            "unit": "ops/sec",
+            "extra": "93 samples"
+          },
+          {
+            "name": "Hilbert Order 10",
+            "value": 3380558,
+            "range": "±0.28%",
+            "unit": "ops/sec",
+            "extra": "96 samples"
           }
         ]
       }
