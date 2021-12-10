@@ -12,3 +12,5 @@ jest.config.js
 .nvmrc
 .prettierrc
 codecov.yml
+output.txt
+coverage
