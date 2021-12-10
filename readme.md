@@ -107,3 +107,8 @@ You can find in this [interactive CodeSandbox](https://codesandbox.io/s/hilbert-
 ![](documentationAssets/hilbert_curve_order3.png)
 
 When the user mouse over the grid, the console writes the value (index) and the coordinate. This is possible using the offset functions.
+
+
+# Performance
+
+Every build published has a benchmark for many different curve [available here](https://mrdesjardins.github.io/hilbert-curve-ts/dev/bench/).
