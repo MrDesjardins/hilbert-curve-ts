@@ -40,6 +40,7 @@ jobs:
 
       - name: Run benchmarks
         run: npm run benchmarks | tee output.txt
+        if: matrix.os == 'ubuntu-latest' && matrix.node-version == '16.x'
 
       - name: Store benchmark result
         uses: benchmark-action/github-action-benchmark@v1
@@ -50,6 +51,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           # Push and deploy GitHub pages branch automatically
           auto-push: true
+        if: matrix.os == 'ubuntu-latest' && matrix.node-version == '16.x'
  
       - name: Publish to NPM
         run: npm publish
