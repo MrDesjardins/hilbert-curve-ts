@@ -16,8 +16,7 @@
     "test:coverage": "jest --coverage",
     "test:coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls",
     "benchmarks": "ts-node benchmarks/benchmarks.ts --project tsconfig.benchmarks.json",
-    "benchmarks:output": "ts-node benchmarks/benchmarks.ts --project tsconfig.benchmarks.json | tee output.txt",
-    "lint": "npx eslint . --ext .ts"
+    "benchmarks:output": "ts-node benchmarks/benchmarks.ts --project tsconfig.benchmarks.json | tee output.txt"
   },
   "devDependencies": {
     "@types/benchmark": "^2.1.1",
