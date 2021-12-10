@@ -16,12 +16,16 @@
     "test:coverage": "jest --coverage",
     "test:coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls",
     "benchmarks": "ts-node benchmarks/benchmarks.ts --project tsconfig.benchmarks.json",
-    "benchmarks:output": "ts-node benchmarks/benchmarks.ts --project tsconfig.benchmarks.json | tee output.txt"
+    "benchmarks:output": "ts-node benchmarks/benchmarks.ts --project tsconfig.benchmarks.json | tee output.txt",
+    "lint": "npx eslint . --ext .ts"
   },
   "devDependencies": {
     "@types/benchmark": "^2.1.1",
     "@types/jest": "^27.0.3",
     "benchmark": "^2.1.4",
+    "@typescript-eslint/eslint-plugin": "^5.6.0",
+    "@typescript-eslint/parser": "^5.6.0",
+    "eslint": "^8.4.1",
     "jest": "^27.4.3",
     "ts-jest": "^27.1.0",
     "ts-node": "^10.4.0",
