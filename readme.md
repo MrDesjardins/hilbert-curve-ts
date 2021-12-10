@@ -1,10 +1,14 @@
 [![Build, Test and Coverage](https://github.com/MrDesjardins/hilbert-curve-ts/actions/workflows/action.yml/badge.svg)](https://github.com/MrDesjardins/hilbert-curve-ts/actions/workflows/action.yml)
 [![codecov](https://codecov.io/gh/MrDesjardins/hilbert-curve-ts/branch/master/graph/badge.svg?token=0HGGX9Z9OW)](https://codecov.io/gh/MrDesjardins/hilbert-curve-ts)
+[![](https://img.shields.io/badge/Benchmark-%E2%9C%85-brightgreen)](https://mrdesjardins.github.io/hilbert-curve-ts/dev/bench/)
 
 ![ESNext Target](https://img.shields.io/badge/Target-ESNEXT-brightgreen.svg?style=plastic)
 ![CommonJs Target](https://img.shields.io/badge/Target-CommonJS-brightgreen?style=plastic)
 
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=plastic&logo=typescript&logoColor=white)
+
+![npm](https://img.shields.io/npm/dt/hilbert-curve-ts?label=NPM%20download&style=plastic)
+
 # Goal
 
 You can use this library to translate a one-dimensional array into a two-dimensional one. The values are projected in similar proximity than in the former original array. Also, the library allows projecting from a two-dimensional array to a single array. Hence, possible to go both ways in a deterministic way.
@@ -107,7 +111,6 @@ You can find in this [interactive CodeSandbox](https://codesandbox.io/s/hilbert-
 ![](documentationAssets/hilbert_curve_order3.png)
 
 When the user mouse over the grid, the console writes the value (index) and the coordinate. This is possible using the offset functions.
-
 
 # Performance
 

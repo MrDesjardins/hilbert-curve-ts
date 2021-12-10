@@ -1,0 +1,14 @@
+.github
+.vscode
+benchmarks
+documentationAssets
+node_modules
+src
+tsconfig.benchmarks.json
+tsconfig.commonjs.json
+tsconfig.json
+jest.config.js
+jest.config.js
+.nvmrc
+.prettierrc
+codecov.yml
