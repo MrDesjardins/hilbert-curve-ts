@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639096270410,
+  "lastUpdate": 1639096271844,
   "repoUrl": "https://github.com/MrDesjardins/hilbert-curve-ts",
   "entries": {
     "Benchmark": [
@@ -155,6 +155,37 @@ window.BENCHMARK_DATA = {
             "range": "±0.26%",
             "unit": "ops/sec",
             "extra": "93 samples"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "pdesjardins@netflix.com",
+            "name": "Patrick Desjardins",
+            "username": "MrDesjardins"
+          },
+          "committer": {
+            "email": "pdesjardins@netflix.com",
+            "name": "Patrick Desjardins",
+            "username": "MrDesjardins"
+          },
+          "distinct": true,
+          "id": "3558b64db43e410eee259dea291bed5cbaae2914",
+          "message": "Update tsconfig",
+          "timestamp": "2021-12-09T16:29:52-08:00",
+          "tree_id": "2d1bccd6b7a114441e29a50b0924b46425079852",
+          "url": "https://github.com/MrDesjardins/hilbert-curve-ts/commit/3558b64db43e410eee259dea291bed5cbaae2914"
+        },
+        "date": 1639096271053,
+        "tool": "benchmarkjs",
+        "benches": [
+          {
+            "name": "Hilbert Order 2",
+            "value": 4475490,
+            "range": "±1.19%",
+            "unit": "ops/sec",
+            "extra": "85 samples"
           }
         ]
       }
