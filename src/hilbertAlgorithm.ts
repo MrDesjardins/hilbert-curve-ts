@@ -70,9 +70,9 @@ export class HilbertAlgorithm {
     }
 
     // Array index must fit in the space provided by the order
-    const quadrantPerRow = 2 ** this.order; // This is the number of rows (and columns)
-    const size = quadrantPerRow ** 2; // The maximum size of the matrix. Must be at least as big as the data from the 1d array
-    if (index >= size) {
+    const numberRow = 2 ** this.order; // This is the number of rows (and columns)
+    const maximumDataSize = numberRow ** 2; // The maximum size of the matrix. Must be at least as big as the data from the 1d array
+    if (index >= maximumDataSize) {
       throw new Error(
         "The index is above the supported amount of space the current order support. Reduce the index or increase the order."
       );
@@ -81,46 +81,119 @@ export class HilbertAlgorithm {
     const point: CoordinateValue = { x: 0, y: 0 }; // Define the coordinate in the 2d matrix
     let rx: PointValue;
     let ry: PointValue;
-    let quadrant: ColumnsForOrder = 1; // Always start at the first order and move up
-    let t: number = index;
-    while (quadrant < quadrantPerRow) {
+    let orderIndex: ColumnsForOrder = 1; // Always start at the first order and move up
+    let quadrant: number = index;
+    while (orderIndex < numberRow) {
       // Until we reach the number of quadrant defined by the order
-      rx = (1 & Math.trunc(t / 2)) as PointValue; // Two possible values
-      ry = (1 & (t ^ rx)) as PointValue; // Two possible values
-      this.rotatePoint(point, rx, ry, quadrant); // Rotate depending on rx and ry value
-      point.x += quadrant * rx; // Move the x point from "a quadrant" size OR not (this is 0 or 1 multiplication)
-      point.y += quadrant * ry; // Move the x point from "a quadrant" size OR not (this is 0 or 1 multiplication)
-      t = Math.trunc(t / 4); // 4 point per quadrant, hence we jump by 4
-      quadrant = (quadrant * 2) as ColumnsForOrder; // Each order double the size of element per row (and column)
+      // Determine the index position within the 4 points of a quadrant
+      rx = HilbertAlgorithm.getRx(quadrant);
+      ry = HilbertAlgorithm.getRy(quadrant, rx);
+      HilbertAlgorithm.rotatePoint(point, rx, ry, orderIndex); // Rotate depending on rx and ry value
+      HilbertAlgorithm.movePoint(point, rx, ry, orderIndex);
+      quadrant = Math.trunc(quadrant / 4); // 4 point per quadrant, hence we jump by 4
+      orderIndex = (orderIndex * 2) as ColumnsForOrder; // Each order double the size of element per row (and column)
     }
     return point;
   }
 
   /**
+   * Returns a pattern of 0,0,1,1,0,0,1,1.... the quadrand is the index
+   * of this pattern starting at zero.
+   */
+  public static getRx(quadrant: number): PointValue {
+    if (quadrant < 0) {
+      throw new Error("Index must be above 0");
+    }
+
+    // Uses the binary 01 to extract the number 0 and 1. Big number still
+    // only have 00 or 01 for the first digit
+    // Uses /2 because we want to have two numbers in a row (0,0 then 1,1)
+    return (1 & Math.trunc(quadrant / 2)) as PointValue;
+  }
+
+  /**
+   * Return alternate value of 0 and 1.
+   * If RX is 0, the pattern is: 010101...
+   * If RY is 1, the pattern is: 101010...
+   */
+  public static getRy(quadrant: number, rx: PointValue): PointValue {
+    if (quadrant < 0) {
+      throw new Error("Index must be above 0");
+    }
+
+    // The binary of "1" is "01" and is used for any quadrant to alternate.
+    // The XOR operation shift the starting point of the pattern
+    return (1 & (quadrant ^ rx)) as PointValue;
+  }
+
+  /**
+   * Move a point (not pixel) into a Hilbert matrix.
+   * First order does not do anything because there is only 1 quadrant of 4 points.
+   * The second order can move from one on each axis (or not).
+   */
+  public static movePoint(
+    point: CoordinateValue,
+    rx: PointValue,
+    ry: PointValue,
+    orderIndex: ColumnsForOrder
+  ): void {
+    point.x += orderIndex * rx; // Move the x point from "a quadrant" size OR not (this is 0 or 1 multiplication)
+    point.y += orderIndex * ry; // Move the x point from "a quadrant" size OR not (this is 0 or 1 multiplication)
+  }
+
+  /**
    * Takes a point and return an index. Hilbert algorithm is deterministic, hence
-   * you can take a point from the `indexToPoint` and it returns the exact same index
-   * 
+   * you can take a point from the `indexToPoint` and it returns the exact same index.
+   *
    * Example: pointToIndex(indexToPoint(123)) returns 123s
    */
   public pointToIndex(point: CoordinateValue): number {
-    const n: ColumnsForOrder = (2 ** this.order) as ColumnsForOrder;
+    const numberOfRow: ColumnsForOrder = (2 ** this.order) as ColumnsForOrder;
 
-    if (point.x >= n || point.y >= n) {
+    if (point.x >= numberOfRow || point.y >= numberOfRow) {
       throw new Error("The point must be in range with the order");
     }
     let rx: PointValue;
     let ry: PointValue;
     let index: number = 0;
-    for (let s = n / 2; s > 0; s = Math.floor(s / 2)) {
-      rx = ((point.x & s) > 0 ? 1 : 0) as PointValue;
-      ry = ((point.y & s) > 0 ? 1 : 0) as PointValue;
-      index += s * s * ((3 * rx) ^ ry);
-      this.rotatePoint(point, rx, ry, n);
+    for (
+      let orderIndex: ColumnsForOrder = (numberOfRow / 2) as ColumnsForOrder;
+      orderIndex > 0;
+      orderIndex = Math.floor(orderIndex / 2) as ColumnsForOrder
+    ) {
+      rx = HilbertAlgorithm.getRxFromPoint(point, orderIndex);
+      ry = HilbertAlgorithm.getRyFromPoint(point, orderIndex);
+      index += orderIndex * orderIndex * ((3 * rx) ^ ry);
+      HilbertAlgorithm.rotatePoint(point, rx, ry, numberOfRow);
     }
     return index;
   }
 
-  public rotatePoint(
+  public static getRxFromPoint(point: CoordinateValue, orderIndex: ColumnsForOrder): PointValue {
+    return HilbertAlgorithm.getPointValueFromNumber(point.x, orderIndex);
+  }
+
+  public static getRyFromPoint(point: CoordinateValue, orderIndex: ColumnsForOrder): PointValue {
+    return HilbertAlgorithm.getPointValueFromNumber(point.y, orderIndex);
+  }
+
+  public static getPointValueFromNumber(numberN: number, orderIndex: ColumnsForOrder): PointValue {
+    return ((numberN & orderIndex) > 0 ? 1 : 0) as PointValue;
+  }
+
+  /**
+   * rx and ry give the coordinate of a 2x2 square:
+   *
+   * |0|3|
+   * |1|2|
+   *
+   * Taking a point, that can be any coordinate, we determine the
+   * rotating by moving the point depending of the 2x2 position.
+   *
+   * The rotation occurs only for the first row and has an additional
+   * step when the coordinate is on the second column.
+   */
+  public static rotatePoint(
     point: CoordinateValue,
     rx: Readonly<PointValue>,
     ry: Readonly<PointValue>,

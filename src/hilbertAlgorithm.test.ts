@@ -1,5 +1,6 @@
 import {
   ColumnsForOrder,
+  CoordinateValue,
   HilbertAlgorithm,
   PointValue,
   PointWithPixelValue,
@@ -236,8 +237,236 @@ describe(HilbertAlgorithm.name, () => {
       });
     });
   });
-  describe("rotate", () => {
-    const ha = new HilbertAlgorithm(3);
+  describe("getRx", () => {
+    describe("quadrant under zero", () => {
+      it("throws an exception", () => {
+        expect(() => {
+          HilbertAlgorithm.getRx(-1);
+        }).toThrow();
+      });
+    });
+    describe("quadrant above zero", () => {
+      it("alternates the values", () => {
+        expect(HilbertAlgorithm.getRx(0)).toBe(0);
+        expect(HilbertAlgorithm.getRx(1)).toBe(0);
+        expect(HilbertAlgorithm.getRx(2)).toBe(1);
+        expect(HilbertAlgorithm.getRx(3)).toBe(1);
+        expect(HilbertAlgorithm.getRx(4)).toBe(0);
+        expect(HilbertAlgorithm.getRx(5)).toBe(0);
+        expect(HilbertAlgorithm.getRx(6)).toBe(1);
+      });
+    });
+  });
+  describe("getRy", () => {
+    describe("quadrant under zero", () => {
+      it("throws an exception", () => {
+        expect(() => {
+          HilbertAlgorithm.getRy(-1, 0);
+        }).toThrow();
+      });
+    });
+    describe("quadrant above zero", () => {
+      let rx: PointValue;
+      describe("rx is 0", () => {
+        beforeEach(() => {
+          rx = 0;
+        });
+        it("alternates the values starting at zero", () => {
+          expect(HilbertAlgorithm.getRy(0, rx)).toBe(0);
+          expect(HilbertAlgorithm.getRy(1, rx)).toBe(1);
+          expect(HilbertAlgorithm.getRy(2, rx)).toBe(0);
+          expect(HilbertAlgorithm.getRy(3, rx)).toBe(1);
+          expect(HilbertAlgorithm.getRy(4, rx)).toBe(0);
+          expect(HilbertAlgorithm.getRy(5, rx)).toBe(1);
+          expect(HilbertAlgorithm.getRy(6, rx)).toBe(0);
+        });
+      });
+      describe("rx is 1", () => {
+        beforeEach(() => {
+          rx = 1;
+        });
+        it("alternates the values starting at one", () => {
+          expect(HilbertAlgorithm.getRy(0, rx)).toBe(1);
+          expect(HilbertAlgorithm.getRy(1, rx)).toBe(0);
+          expect(HilbertAlgorithm.getRy(2, rx)).toBe(1);
+          expect(HilbertAlgorithm.getRy(3, rx)).toBe(0);
+          expect(HilbertAlgorithm.getRy(4, rx)).toBe(1);
+          expect(HilbertAlgorithm.getRy(5, rx)).toBe(0);
+          expect(HilbertAlgorithm.getRy(6, rx)).toBe(1);
+        });
+      });
+    });
+  });
+  describe("movePoint", () => {
+    let point: CoordinateValue;
+    let rx: PointValue;
+    let ry: PointValue;
+    let order: ColumnsForOrder;
+    beforeEach(() => {
+      point = { x: 123, y: 456 };
+    });
+    describe("Order 1", () => {
+      beforeEach(() => {
+        order = 1;
+      });
+      describe("rx is 0", () => {
+        beforeEach(() => {
+          rx = 0;
+        });
+        it("does not move the x coordinate", () => {
+          HilbertAlgorithm.movePoint(point, rx, ry, order);
+          expect(point.x).toBe(123);
+        });
+      });
+      describe("rx is 1", () => {
+        beforeEach(() => {
+          rx = 1;
+        });
+        it("does moves the x coordinate", () => {
+          HilbertAlgorithm.movePoint(point, rx, ry, order);
+          expect(point.x).toBe(124);
+        });
+      });
+      describe("ry is 0", () => {
+        beforeEach(() => {
+          ry = 0;
+        });
+        it("does not move the y coordinate", () => {
+          HilbertAlgorithm.movePoint(point, rx, ry, order);
+          expect(point.y).toBe(456);
+        });
+      });
+      describe("ry is 1", () => {
+        beforeEach(() => {
+          ry = 1;
+        });
+        it("does move the y coordinate", () => {
+          HilbertAlgorithm.movePoint(point, rx, ry, order);
+          expect(point.y).toBe(457);
+        });
+      });
+    });
+    describe("Order 2", () => {
+      beforeEach(() => {
+        order = 2;
+      });
+      describe("rx is 0", () => {
+        beforeEach(() => {
+          rx = 0;
+        });
+        it("does not move the x coordinate", () => {
+          HilbertAlgorithm.movePoint(point, rx, ry, order);
+          expect(point.x).toBe(123);
+        });
+      });
+      describe("rx is 1", () => {
+        beforeEach(() => {
+          rx = 1;
+        });
+        it("does moves the x coordinate", () => {
+          HilbertAlgorithm.movePoint(point, rx, ry, order);
+          expect(point.x).toBe(125); // Move 2 because += 1*2
+        });
+      });
+      describe("ry is 0", () => {
+        beforeEach(() => {
+          ry = 0;
+        });
+        it("does not move the y coordinate", () => {
+          HilbertAlgorithm.movePoint(point, rx, ry, order);
+          expect(point.y).toBe(456);
+        });
+      });
+      describe("ry is 1", () => {
+        beforeEach(() => {
+          ry = 1;
+        });
+        it("does move the y coordinate", () => {
+          HilbertAlgorithm.movePoint(point, rx, ry, order);
+          expect(point.y).toBe(458);
+        });
+      });
+    });
+  });
+
+  describe(HilbertAlgorithm.getPointValueFromNumber.name, () => {
+    let index: ColumnsForOrder;
+    describe("Index is 1", () => {
+      beforeEach(() => {
+        index = 1;
+      });
+      describe("Four possible values of order 1", () => {
+        it("returns 0 or 1", () => {
+          expect(HilbertAlgorithm.getPointValueFromNumber(0, index)).toBe(0);
+          expect(HilbertAlgorithm.getPointValueFromNumber(1, index)).toBe(1);
+          expect(HilbertAlgorithm.getPointValueFromNumber(2, index)).toBe(0);
+          expect(HilbertAlgorithm.getPointValueFromNumber(3, index)).toBe(1);
+        });
+      });
+    });
+    describe("Index is 2", () => {
+      beforeEach(() => {
+        index = 2;
+      });
+      describe("Eight first possible values of order 2", () => {
+        it("returns 0 or 1", () => {
+          expect(HilbertAlgorithm.getPointValueFromNumber(0, index)).toBe(0);
+          expect(HilbertAlgorithm.getPointValueFromNumber(1, index)).toBe(0);
+          expect(HilbertAlgorithm.getPointValueFromNumber(2, index)).toBe(1);
+          expect(HilbertAlgorithm.getPointValueFromNumber(3, index)).toBe(1);
+          expect(HilbertAlgorithm.getPointValueFromNumber(4, index)).toBe(0);
+          expect(HilbertAlgorithm.getPointValueFromNumber(5, index)).toBe(0);
+          expect(HilbertAlgorithm.getPointValueFromNumber(6, index)).toBe(1);
+          expect(HilbertAlgorithm.getPointValueFromNumber(7, index)).toBe(1);
+        });
+      });
+    });
+
+    describe("Index is 4", () => {
+      beforeEach(() => {
+        index = 4;
+      });
+      describe("Eight first possible values of order 3", () => {
+        it("returns 0 or 1", () => {
+          expect(HilbertAlgorithm.getPointValueFromNumber(0, index)).toBe(0);
+          expect(HilbertAlgorithm.getPointValueFromNumber(1, index)).toBe(0);
+          expect(HilbertAlgorithm.getPointValueFromNumber(2, index)).toBe(0);
+          expect(HilbertAlgorithm.getPointValueFromNumber(3, index)).toBe(0);
+          expect(HilbertAlgorithm.getPointValueFromNumber(4, index)).toBe(1);
+          expect(HilbertAlgorithm.getPointValueFromNumber(5, index)).toBe(1);
+          expect(HilbertAlgorithm.getPointValueFromNumber(6, index)).toBe(1);
+          expect(HilbertAlgorithm.getPointValueFromNumber(7, index)).toBe(1);
+        });
+      });
+    });
+  });
+  describe(HilbertAlgorithm.getRxFromPoint, () => {
+    let point: CoordinateValue;
+    let mock: jest.Mock;
+    beforeEach(() => {
+      point = { x: 50, y: 100 };
+      mock = jest.fn();
+      HilbertAlgorithm.getPointValueFromNumber =  mock;
+    });
+    it("calls the getPointFromValue with the x value of the point", () => {
+      HilbertAlgorithm.getRxFromPoint(point, 1);
+      expect(mock.mock.calls[0][0]).toBe(50);
+    });
+  });
+  describe(HilbertAlgorithm.getRyFromPoint, () => {
+    let point: CoordinateValue;
+    let mock: jest.Mock;
+    beforeEach(() => {
+      point = { x: 50, y: 100 };
+      mock = jest.fn();
+      HilbertAlgorithm.getPointValueFromNumber =  mock;
+    });
+    it("calls the getPointFromValue with the x value of the point", () => {
+      HilbertAlgorithm.getRyFromPoint(point, 1);
+      expect(mock.mock.calls[0][0]).toBe(100);
+    });
+  });
+  describe(HilbertAlgorithm.rotatePoint.name, () => {
     let point: PointWithPixelValue;
     let rx: PointValue;
     let ry: PointValue;
@@ -265,7 +494,7 @@ describe(HilbertAlgorithm.name, () => {
               point = { x: 0, y: 0 };
             });
             it("rotates point to (0,0)", () => {
-              ha.rotatePoint(point, rx, ry, numberColumns);
+              HilbertAlgorithm.rotatePoint(point, rx, ry, numberColumns);
               expect(point.x).toBe(0);
               expect(point.y).toBe(0);
             });
@@ -280,7 +509,7 @@ describe(HilbertAlgorithm.name, () => {
               point = { x: 0, y: 0 };
             });
             it("rotates point to (0,0)", () => {
-              ha.rotatePoint(point, rx, ry, numberColumns);
+              HilbertAlgorithm.rotatePoint(point, rx, ry, numberColumns);
               expect(point.x).toBe(0);
               expect(point.y).toBe(0);
             });
@@ -300,7 +529,7 @@ describe(HilbertAlgorithm.name, () => {
               point = { x: 0, y: 0 };
             });
             it("rotates to (0,0)", () => {
-              ha.rotatePoint(point, rx, ry, numberColumns);
+              HilbertAlgorithm.rotatePoint(point, rx, ry, numberColumns);
               expect(point.x).toBe(0);
               expect(point.y).toBe(0);
             });
@@ -310,7 +539,7 @@ describe(HilbertAlgorithm.name, () => {
               point = { x: 0, y: 0 };
             });
             it("rotates to (0,0)", () => {
-              ha.rotatePoint(point, rx, ry, numberColumns);
+              HilbertAlgorithm.rotatePoint(point, rx, ry, numberColumns);
               expect(point.x).toBe(0);
               expect(point.y).toBe(0);
             });
@@ -326,7 +555,7 @@ describe(HilbertAlgorithm.name, () => {
               point = { x: 0, y: 0 };
             });
             it("rotates point to (0,0)", () => {
-              ha.rotatePoint(point, rx, ry, numberColumns);
+              HilbertAlgorithm.rotatePoint(point, rx, ry, numberColumns);
               expect(point.x).toBe(0);
               expect(point.y).toBe(0);
             });
@@ -352,7 +581,7 @@ describe(HilbertAlgorithm.name, () => {
               point = { x: 0, y: 0 };
             });
             it("rotates point to (0,0)", () => {
-              ha.rotatePoint(point, rx, ry, numberColumns);
+              HilbertAlgorithm.rotatePoint(point, rx, ry, numberColumns);
               expect(point.x).toBe(0);
               expect(point.y).toBe(0);
             });
@@ -367,7 +596,7 @@ describe(HilbertAlgorithm.name, () => {
               point = { x: 0, y: 0 };
             });
             it("rotates point to (0,0)", () => {
-              ha.rotatePoint(point, rx, ry, numberColumns);
+              HilbertAlgorithm.rotatePoint(point, rx, ry, numberColumns);
               expect(point.x).toBe(0);
               expect(point.y).toBe(0);
             });
@@ -387,7 +616,7 @@ describe(HilbertAlgorithm.name, () => {
               point = { x: 0, y: 0 };
             });
             it("rotates to (7,7)", () => {
-              ha.rotatePoint(point, rx, ry, numberColumns);
+              HilbertAlgorithm.rotatePoint(point, rx, ry, numberColumns);
               expect(point.x).toBe(7);
               expect(point.y).toBe(7);
             });
@@ -397,7 +626,7 @@ describe(HilbertAlgorithm.name, () => {
               point = { x: 0, y: 0 };
             });
             it("rotates to (7,7)", () => {
-              ha.rotatePoint(point, rx, ry, numberColumns);
+              HilbertAlgorithm.rotatePoint(point, rx, ry, numberColumns);
               expect(point.x).toBe(7);
               expect(point.y).toBe(7);
             });
@@ -413,7 +642,7 @@ describe(HilbertAlgorithm.name, () => {
               point = { x: 0, y: 0 };
             });
             it("rotates point to (0,0)", () => {
-              ha.rotatePoint(point, rx, ry, numberColumns);
+              HilbertAlgorithm.rotatePoint(point, rx, ry, numberColumns);
               expect(point.x).toBe(0);
               expect(point.y).toBe(0);
             });
@@ -431,7 +660,7 @@ describe(HilbertAlgorithm.name, () => {
         });
         it("throws an exception", () => {
           expect(() => {
-            ha.rotatePoint(point, rx, ry, numberColumns);
+            HilbertAlgorithm.rotatePoint(point, rx, ry, numberColumns);
           }).toThrow();
         });
       });
@@ -445,7 +674,7 @@ describe(HilbertAlgorithm.name, () => {
         });
         it("throws an exception", () => {
           expect(() => {
-            ha.rotatePoint(point, rx, ry, numberColumns);
+            HilbertAlgorithm.rotatePoint(point, rx, ry, numberColumns);
           }).toThrow();
         });
       });
