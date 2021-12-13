@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1639354132341,
+  "lastUpdate": 1639354710846,
   "repoUrl": "https://github.com/MrDesjardins/hilbert-curve-ts",
   "entries": {
     "Benchmark": [
@@ -793,6 +793,240 @@ window.BENCHMARK_DATA = {
             "range": "±0.46%",
             "unit": "ops/sec",
             "extra": "92 samples"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "pdesjardins@netflix.com",
+            "name": "Patrick Desjardins",
+            "username": "MrDesjardins"
+          },
+          "committer": {
+            "email": "pdesjardins@netflix.com",
+            "name": "Patrick Desjardins",
+            "username": "MrDesjardins"
+          },
+          "distinct": true,
+          "id": "2716fbc4ad4ccab15887dba07fc06a07e9f23892",
+          "message": "Increase the scope of the benchmark",
+          "timestamp": "2021-12-12T16:14:48-08:00",
+          "tree_id": "48af29317f286e9abbdad8db198435cb4d881e72",
+          "url": "https://github.com/MrDesjardins/hilbert-curve-ts/commit/2716fbc4ad4ccab15887dba07fc06a07e9f23892"
+        },
+        "date": 1639354710091,
+        "tool": "benchmarkjs",
+        "benches": [
+          {
+            "name": "Hilbert Order 2",
+            "value": 5322686,
+            "range": "±0.25%",
+            "unit": "ops/sec",
+            "extra": "95 samples"
+          },
+          {
+            "name": "Hilbert Order 3",
+            "value": 4852573,
+            "range": "±0.25%",
+            "unit": "ops/sec",
+            "extra": "96 samples"
+          },
+          {
+            "name": "Hilbert Order 4",
+            "value": 4467705,
+            "range": "±0.27%",
+            "unit": "ops/sec",
+            "extra": "90 samples"
+          },
+          {
+            "name": "Hilbert Order 5",
+            "value": 4144563,
+            "range": "±0.31%",
+            "unit": "ops/sec",
+            "extra": "90 samples"
+          },
+          {
+            "name": "Hilbert Order 6",
+            "value": 3921955,
+            "range": "±0.24%",
+            "unit": "ops/sec",
+            "extra": "94 samples"
+          },
+          {
+            "name": "Hilbert Order 7",
+            "value": 3619611,
+            "range": "±0.33%",
+            "unit": "ops/sec",
+            "extra": "91 samples"
+          },
+          {
+            "name": "Hilbert Order 8",
+            "value": 3481199,
+            "range": "±0.43%",
+            "unit": "ops/sec",
+            "extra": "96 samples"
+          },
+          {
+            "name": "Hilbert Order 9",
+            "value": 3182749,
+            "range": "±0.75%",
+            "unit": "ops/sec",
+            "extra": "94 samples"
+          },
+          {
+            "name": "Hilbert Order 10",
+            "value": 2875604,
+            "range": "±2.70%",
+            "unit": "ops/sec",
+            "extra": "89 samples"
+          },
+          {
+            "name": "Hilbert Order 11",
+            "value": 2814034,
+            "range": "±0.37%",
+            "unit": "ops/sec",
+            "extra": "91 samples"
+          },
+          {
+            "name": "Hilbert Order 12",
+            "value": 2635876,
+            "range": "±0.51%",
+            "unit": "ops/sec",
+            "extra": "94 samples"
+          },
+          {
+            "name": "Hilbert Order 13",
+            "value": 2659822,
+            "range": "±3.68%",
+            "unit": "ops/sec",
+            "extra": "84 samples"
+          },
+          {
+            "name": "Hilbert Order 14",
+            "value": 2799652,
+            "range": "±0.52%",
+            "unit": "ops/sec",
+            "extra": "92 samples"
+          },
+          {
+            "name": "Hilbert Order 15",
+            "value": 2629650,
+            "range": "±0.43%",
+            "unit": "ops/sec",
+            "extra": "93 samples"
+          },
+          {
+            "name": "Hilbert Order 16",
+            "value": 2493949,
+            "range": "±1.90%",
+            "unit": "ops/sec",
+            "extra": "93 samples"
+          },
+          {
+            "name": "Hilbert Order 2 - Reverse",
+            "value": 6915673,
+            "range": "±0.41%",
+            "unit": "ops/sec",
+            "extra": "97 samples"
+          },
+          {
+            "name": "Hilbert Order 3 - Reverse",
+            "value": 6502278,
+            "range": "±0.42%",
+            "unit": "ops/sec",
+            "extra": "94 samples"
+          },
+          {
+            "name": "Hilbert Order 4 - Reverse",
+            "value": 5957295,
+            "range": "±0.33%",
+            "unit": "ops/sec",
+            "extra": "96 samples"
+          },
+          {
+            "name": "Hilbert Order 5 - Reverse",
+            "value": 5574606,
+            "range": "±3.27%",
+            "unit": "ops/sec",
+            "extra": "94 samples"
+          },
+          {
+            "name": "Hilbert Order 6 - Reverse",
+            "value": 5732439,
+            "range": "±0.35%",
+            "unit": "ops/sec",
+            "extra": "95 samples"
+          },
+          {
+            "name": "Hilbert Order 7 - Reverse",
+            "value": 5147665,
+            "range": "±3.09%",
+            "unit": "ops/sec",
+            "extra": "92 samples"
+          },
+          {
+            "name": "Hilbert Order 8 - Reverse",
+            "value": 5211586,
+            "range": "±0.50%",
+            "unit": "ops/sec",
+            "extra": "95 samples"
+          },
+          {
+            "name": "Hilbert Order 9 - Reverse",
+            "value": 4939383,
+            "range": "±0.29%",
+            "unit": "ops/sec",
+            "extra": "94 samples"
+          },
+          {
+            "name": "Hilbert Order 10 - Reverse",
+            "value": 4758393,
+            "range": "±0.30%",
+            "unit": "ops/sec",
+            "extra": "95 samples"
+          },
+          {
+            "name": "Hilbert Order 11 - Reverse",
+            "value": 4539525,
+            "range": "±2.20%",
+            "unit": "ops/sec",
+            "extra": "92 samples"
+          },
+          {
+            "name": "Hilbert Order 12 - Reverse",
+            "value": 4522236,
+            "range": "±0.31%",
+            "unit": "ops/sec",
+            "extra": "97 samples"
+          },
+          {
+            "name": "Hilbert Order 13 - Reverse",
+            "value": 4345660,
+            "range": "±0.35%",
+            "unit": "ops/sec",
+            "extra": "97 samples"
+          },
+          {
+            "name": "Hilbert Order 14 - Reverse",
+            "value": 4120539,
+            "range": "±2.69%",
+            "unit": "ops/sec",
+            "extra": "92 samples"
+          },
+          {
+            "name": "Hilbert Order 15 - Reverse",
+            "value": 4130037,
+            "range": "±0.31%",
+            "unit": "ops/sec",
+            "extra": "96 samples"
+          },
+          {
+            "name": "Hilbert Order 16 - Reverse",
+            "value": 3990243,
+            "range": "±0.30%",
+            "unit": "ops/sec",
+            "extra": "97 samples"
           }
         ]
       }
