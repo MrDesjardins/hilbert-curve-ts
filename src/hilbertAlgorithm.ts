@@ -1,6 +1,19 @@
+/**
+ * Supported Hilbert's order. The scope is determined with what is usable in a NodeJS environment
+ * in term of performance. It is easily possible to extend the order to greater value. Caveat: if
+ * new orders are introduced, the `RowsForOrder` type, below, must be adjusted as well.
+ */
 export type HilbertOrder = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16;
-export type ColumnsForOrder =
-  | 1
+
+/**
+ * Number of rows (and columns) for each order.
+ * For example:
+ *  Order 1: has 2 row and 2 column
+ *  Order 2: has 4 rows and 4 columns
+ *  Order 3: has 8 rows and 8 columns
+ */
+export type RowsForOrder =
+  | 1 // 1 Only for the loop logic
   | 2
   | 4
   | 8
@@ -17,6 +30,13 @@ export type ColumnsForOrder =
   | 16384
   | 32768
   | 65636;
+
+/**
+ * Represent the point value of the smallest entity: Single quadrant.
+ * Visual:
+ *  |0,0|0,1|
+ *  |1,0|1,1|
+ */
 export type PointValue = 0 | 1;
 
 /**
@@ -29,6 +49,10 @@ export type CoordinateValue = { x: number; y: number };
  * Similar to the coordinate value but can be any value since it is a pixel.
  */
 export type PointWithPixelValue = { x: number; y: number };
+
+/**
+ * Main class that perform the 1d to 2d and 2d to 1d with the Hilbert algorithm
+ */
 export class HilbertAlgorithm {
   /**
    * The order defines the level of point that can be handle. It determines
@@ -81,7 +105,7 @@ export class HilbertAlgorithm {
     const point: CoordinateValue = { x: 0, y: 0 }; // Define the coordinate in the 2d matrix
     let rx: PointValue;
     let ry: PointValue;
-    let orderIndex: ColumnsForOrder = 1; // Always start at the first order and move up
+    let orderIndex: RowsForOrder = 1; // Always start at the first order and move up
     let quadrant: number = index;
     while (orderIndex < numberRow) {
       // Until we reach the number of quadrant defined by the order
@@ -91,7 +115,7 @@ export class HilbertAlgorithm {
       HilbertAlgorithm.rotatePoint(point, rx, ry, orderIndex); // Rotate depending on rx and ry value
       HilbertAlgorithm.movePoint(point, rx, ry, orderIndex);
       quadrant = Math.trunc(quadrant / 4); // 4 point per quadrant, hence we jump by 4
-      orderIndex = (orderIndex * 2) as ColumnsForOrder; // Each order double the size of element per row (and column)
+      orderIndex = (orderIndex * 2) as RowsForOrder; // Each order double the size of element per row (and column)
     }
     return point;
   }
@@ -135,7 +159,7 @@ export class HilbertAlgorithm {
     point: CoordinateValue,
     rx: PointValue,
     ry: PointValue,
-    orderIndex: ColumnsForOrder
+    orderIndex: RowsForOrder
   ): void {
     point.x += orderIndex * rx; // Move the x point from "a quadrant" size OR not (this is 0 or 1 multiplication)
     point.y += orderIndex * ry; // Move the x point from "a quadrant" size OR not (this is 0 or 1 multiplication)
@@ -148,7 +172,7 @@ export class HilbertAlgorithm {
    * Example: pointToIndex(indexToPoint(123)) returns 123s
    */
   public pointToIndex(point: CoordinateValue): number {
-    const numberOfRow: ColumnsForOrder = (2 ** this.order) as ColumnsForOrder;
+    const numberOfRow: RowsForOrder = (2 ** this.order) as RowsForOrder;
 
     if (point.x >= numberOfRow || point.y >= numberOfRow) {
       throw new Error("The point must be in range with the order");
@@ -157,28 +181,50 @@ export class HilbertAlgorithm {
     let ry: PointValue;
     let index: number = 0;
     for (
-      let orderIndex: ColumnsForOrder = (numberOfRow / 2) as ColumnsForOrder;
-      orderIndex > 0;
-      orderIndex = Math.floor(orderIndex / 2) as ColumnsForOrder
+      let rowIndex: RowsForOrder = (numberOfRow / 2) as RowsForOrder;
+      rowIndex > 0;
+      rowIndex = Math.floor(rowIndex / 2) as RowsForOrder
     ) {
-      rx = HilbertAlgorithm.getRxFromPoint(point, orderIndex);
-      ry = HilbertAlgorithm.getRyFromPoint(point, orderIndex);
-      index += orderIndex * orderIndex * ((3 * rx) ^ ry);
+      rx = HilbertAlgorithm.getRxFromPoint(point, rowIndex);
+      ry = HilbertAlgorithm.getRyFromPoint(point, rowIndex);
+      index += HilbertAlgorithm.getNewIndexFromRows(rowIndex, rx, ry);
       HilbertAlgorithm.rotatePoint(point, rx, ry, numberOfRow);
     }
     return index;
   }
 
-  public static getRxFromPoint(point: CoordinateValue, orderIndex: ColumnsForOrder): PointValue {
+  /**
+   * Return the new 1d index from the current rows index (will be called several times if order > 1)
+   * Relies on the rx and ry to determine how many jumps in the 1d space to perform.
+   */
+  public static getNewIndexFromRows(
+    rowsIndex: RowsForOrder,
+    rx: PointValue,
+    ry: PointValue
+  ): number {
+    return rowsIndex * rowsIndex * ((3 * rx) ^ ry);
+  }
+
+  /**
+   * Call the `getPointValueFromNumber` function with the `x` point
+   */
+  public static getRxFromPoint(point: CoordinateValue, orderIndex: RowsForOrder): PointValue {
     return HilbertAlgorithm.getPointValueFromNumber(point.x, orderIndex);
   }
 
-  public static getRyFromPoint(point: CoordinateValue, orderIndex: ColumnsForOrder): PointValue {
+  /**
+   * Call the `getPointValueFromNumber` function with the `y` point
+   */
+  public static getRyFromPoint(point: CoordinateValue, orderIndex: RowsForOrder): PointValue {
     return HilbertAlgorithm.getPointValueFromNumber(point.y, orderIndex);
   }
 
-  public static getPointValueFromNumber(numberN: number, orderIndex: ColumnsForOrder): PointValue {
-    return ((numberN & orderIndex) > 0 ? 1 : 0) as PointValue;
+  /**
+   * From a number and an index, return the value 0 or 1 depending of the AND value of these twos.
+   */
+  public static getPointValueFromNumber(numberN: number, orderIndex: RowsForOrder): PointValue {
+    const andResult = numberN & orderIndex; // 0, 1, 2
+    return (andResult > 0 ? 1 : 0) as PointValue;
   }
 
   /**
@@ -197,7 +243,7 @@ export class HilbertAlgorithm {
     point: CoordinateValue,
     rx: Readonly<PointValue>,
     ry: Readonly<PointValue>,
-    numberColumns: Readonly<ColumnsForOrder>
+    numberColumns: Readonly<RowsForOrder>
   ): void {
     if (ry === 0) {
       if (rx === 1) {
@@ -214,7 +260,10 @@ export class HilbertAlgorithm {
     }
   }
 
-  public offsetPoint(point: CoordinateValue, projectionWidth: number): PointWithPixelValue {
+  public offsetPoint(
+    point: Readonly<CoordinateValue>,
+    projectionWidth: number
+  ): PointWithPixelValue {
     if (projectionWidth < 0) {
       throw new Error("Projecting a point must be on a positive width");
     }
@@ -226,7 +275,10 @@ export class HilbertAlgorithm {
     };
   }
 
-  public deoffsetPoint(point: PointWithPixelValue, projectionWidth: number): CoordinateValue {
+  public deoffsetPoint(
+    point: Readonly<PointWithPixelValue>,
+    projectionWidth: number
+  ): CoordinateValue {
     if (projectionWidth < 0) {
       throw new Error("Projecting a point must be on a positive width");
     }

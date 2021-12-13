@@ -1,5 +1,5 @@
 import {
-  ColumnsForOrder,
+  RowsForOrder,
   CoordinateValue,
   HilbertAlgorithm,
   PointValue,
@@ -301,7 +301,7 @@ describe(HilbertAlgorithm.name, () => {
     let point: CoordinateValue;
     let rx: PointValue;
     let ry: PointValue;
-    let order: ColumnsForOrder;
+    let order: RowsForOrder;
     beforeEach(() => {
       point = { x: 123, y: 456 };
     });
@@ -390,7 +390,7 @@ describe(HilbertAlgorithm.name, () => {
   });
 
   describe(HilbertAlgorithm.getPointValueFromNumber.name, () => {
-    let index: ColumnsForOrder;
+    let index: RowsForOrder;
     describe("Index is 1", () => {
       beforeEach(() => {
         index = 1;
@@ -446,7 +446,7 @@ describe(HilbertAlgorithm.name, () => {
     beforeEach(() => {
       point = { x: 50, y: 100 };
       mock = jest.fn();
-      HilbertAlgorithm.getPointValueFromNumber =  mock;
+      HilbertAlgorithm.getPointValueFromNumber = mock;
     });
     it("calls the getPointFromValue with the x value of the point", () => {
       HilbertAlgorithm.getRxFromPoint(point, 1);
@@ -459,7 +459,7 @@ describe(HilbertAlgorithm.name, () => {
     beforeEach(() => {
       point = { x: 50, y: 100 };
       mock = jest.fn();
-      HilbertAlgorithm.getPointValueFromNumber =  mock;
+      HilbertAlgorithm.getPointValueFromNumber = mock;
     });
     it("calls the getPointFromValue with the x value of the point", () => {
       HilbertAlgorithm.getRyFromPoint(point, 1);
@@ -470,7 +470,7 @@ describe(HilbertAlgorithm.name, () => {
     let point: PointWithPixelValue;
     let rx: PointValue;
     let ry: PointValue;
-    let numberColumns: ColumnsForOrder;
+    let numberColumns: RowsForOrder;
     beforeEach(() => {
       point = { x: 0, y: 0 };
       rx = 1;
@@ -676,6 +676,105 @@ describe(HilbertAlgorithm.name, () => {
           expect(() => {
             HilbertAlgorithm.rotatePoint(point, rx, ry, numberColumns);
           }).toThrow();
+        });
+      });
+    });
+  });
+  describe(HilbertAlgorithm.getNewIndexFromRows.name, () => {
+    let rowsIndex: RowsForOrder;
+    let rx: PointValue;
+    let ry: PointValue;
+    describe("One row", () => {
+      beforeEach(() => {
+        rowsIndex = 1;
+      });
+      describe("rx = 0", () => {
+        beforeEach(() => {
+          rx = 0;
+        });
+        describe("ry = 0", () => {
+          beforeEach(() => {
+            ry = 0;
+          });
+          it("returns 0", () => {
+            expect(HilbertAlgorithm.getNewIndexFromRows(rowsIndex, rx, ry)).toBe(0);
+          });
+        });
+        describe("ry = 1", () => {
+          beforeEach(() => {
+            ry = 1;
+          });
+          it("returns 1", () => {
+            expect(HilbertAlgorithm.getNewIndexFromRows(rowsIndex, rx, ry)).toBe(1);
+          });
+        });
+      });
+      describe("rx = 1", () => {
+        beforeEach(() => {
+          rx = 1;
+        });
+        describe("ry = 0", () => {
+          beforeEach(() => {
+            ry = 0;
+          });
+          it("returns 3", () => {
+            expect(HilbertAlgorithm.getNewIndexFromRows(rowsIndex, rx, ry)).toBe(3);
+          });
+        });
+        describe("ry = 1", () => {
+          beforeEach(() => {
+            ry = 1;
+          });
+          it("returns 2", () => {
+            expect(HilbertAlgorithm.getNewIndexFromRows(rowsIndex, rx, ry)).toBe(2);
+          });
+        });
+      });
+    });
+    describe("Two row", () => {
+      beforeEach(() => {
+        rowsIndex = 2;
+      });
+      describe("rx = 0", () => {
+        beforeEach(() => {
+          rx = 0;
+        });
+        describe("ry = 0", () => {
+          beforeEach(() => {
+            ry = 0;
+          });
+          it("returns 0", () => {
+            expect(HilbertAlgorithm.getNewIndexFromRows(rowsIndex, rx, ry)).toBe(0);
+          });
+        });
+        describe("ry = 1", () => {
+          beforeEach(() => {
+            ry = 1;
+          });
+          it("returns 4", () => {
+            expect(HilbertAlgorithm.getNewIndexFromRows(rowsIndex, rx, ry)).toBe(4);
+          });
+        });
+      });
+      describe("rx = 1", () => {
+        beforeEach(() => {
+          rx = 1;
+        });
+        describe("ry = 0", () => {
+          beforeEach(() => {
+            ry = 0;
+          });
+          it("returns 12", () => {
+            expect(HilbertAlgorithm.getNewIndexFromRows(rowsIndex, rx, ry)).toBe(12);
+          });
+        });
+        describe("ry = 1", () => {
+          beforeEach(() => {
+            ry = 1;
+          });
+          it("returns 8", () => {
+            expect(HilbertAlgorithm.getNewIndexFromRows(rowsIndex, rx, ry)).toBe(8);
+          });
         });
       });
     });
