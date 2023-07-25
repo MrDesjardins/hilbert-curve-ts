@@ -1,6 +1,6 @@
 /**
  * Supported Hilbert's order. The scope is determined with what is usable in a NodeJS environment
- * in term of performance. It is easily possible to extend the order to greater value. Caveat: if
+ * in terms of performance. It is easily possible to extend the order to greater value. Caveat: if
  * new orders are introduced, the `RowsForOrder` type, below, must be adjusted as well.
  */
 export type HilbertOrder = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16;
@@ -55,7 +55,7 @@ export type PointWithPixelValue = { x: number; y: number };
  */
 export class HilbertAlgorithm {
   /**
-   * The order defines the level of point that can be handle. It determines
+   * The order defines the level of point that can be handled. It determines
    * the length of the 1d array which correspond to the length of point in
    * the 2d matrix.
    *
@@ -121,7 +121,7 @@ export class HilbertAlgorithm {
   }
 
   /**
-   * Returns a pattern of 0,0,1,1,0,0,1,1.... the quadrand is the index
+   * Returns a pattern of 0,0,1,1,0,0,1,1.... the quadrant is the index
    * of this pattern starting at zero.
    */
   public static getRx(quadrant: number): PointValue {
@@ -220,7 +220,7 @@ export class HilbertAlgorithm {
   }
 
   /**
-   * From a number and an index, return the value 0 or 1 depending of the AND value of these twos.
+   * From a number and an index, return the value 0 or 1 depending on the AND value of these twos.
    */
   public static getPointValueFromNumber(numberN: number, orderIndex: RowsForOrder): PointValue {
     const andResult = numberN & orderIndex; // 0, 1, 2
@@ -234,7 +234,7 @@ export class HilbertAlgorithm {
    * |1|2|
    *
    * Taking a point, that can be any coordinate, we determine the
-   * rotating by moving the point depending of the 2x2 position.
+   * rotating by moving the point depending on the 2x2 position.
    *
    * The rotation occurs only for the first row and has an additional
    * step when the coordinate is on the second column.
@@ -250,10 +250,10 @@ export class HilbertAlgorithm {
         point.x = numberColumns - 1 - point.x;
         point.y = numberColumns - 1 - point.y;
         if (point.x < 0) {
-          throw Error("Number of columns must be at leat 1 above x");
+          throw Error("Number of columns must be at least 1 above x");
         }
         if (point.y < 0) {
-          throw Error("Number of columns must be at leat 1 above y");
+          throw Error("Number of columns must be at least 1 above y");
         }
       }
       [point.x, point.y] = [point.y, point.x];
