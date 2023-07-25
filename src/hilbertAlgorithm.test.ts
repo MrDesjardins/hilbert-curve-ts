@@ -8,7 +8,7 @@ import {
 
 describe(HilbertAlgorithm.name, () => {
   describe("constructor", () => {
-    it("instanciates", () => {
+    it("instantiates", () => {
       new HilbertAlgorithm(1);
     });
   });
@@ -20,7 +20,7 @@ describe(HilbertAlgorithm.name, () => {
       }).toThrow();
     });
 
-    it("is is not an integerindex", () => {
+    it("is is not an integer index", () => {
       expect(() => {
         ha.indexToPoint(1.1);
       }).toThrow();
@@ -822,7 +822,7 @@ describe(HilbertAlgorithm.name, () => {
       });
     });
 
-    describe("projectionWidth postive", () => {
+    describe("projectionWidth positive", () => {
       beforeEach(() => {
         projectionWidth = 128;
       });
